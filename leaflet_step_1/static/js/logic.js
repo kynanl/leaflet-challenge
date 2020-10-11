@@ -1,7 +1,7 @@
 
 var myMap = L.map("mapid", {
     center: [40.776, -112.060],
-    zoom: 13,
+    zoom: 5
     // layers: 
 });
 
@@ -23,15 +23,44 @@ var link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.
 let markers = []
 d3.json(link, function (data) {
     console.log(data);
-    L.geoJson(data).addTo(myMap);
-    //   let stations = data.data.stations;
-    //   console.log(stations);
-    //   for (station of stations) {
-    //     const lat = +station.lat;
-    //     const lon = +station.lon;
-    //     const station_id = +station.station_id;
-    //     const capacity = +station.capacity;
-    //     const name = station.name
+    L.geoJson(data, {
+        pointToLayer: function (feature, latlng) {
+          return L.circleMarker(latlng);
+        },
+        // style: styleInfo,
+        // onEachFeature: function (feature, layer) {
+        //   layer.bindPopup(
+        //     "Location: " + feature.properties.place + "<hr> Magnitude: " +
+        //       feature.properties.mag +
+        //       "<br> Depth: " +
+        //       feature.geometry.coordinates[2]
+        //   );
+        // },
+      }).addTo(myMap);
+});
+
+
+    
     //     L.marker([lat, lon]).addTo(myMap).bindPopup(`${station_id} : ${name} capacity: ${capacity}`)
     //   }
-});
+
+
+// for (country of countries) {
+//     let c = undefined;
+//     if (country.points <= 90) {
+//       let c = "red";
+//     }else if (country.points <= 100) {
+//       let c = "green";
+//     }else {
+//       let c = "black";
+//     }
+//     L.circle(country.location, {
+//       color: c,
+//       radius: 1500 * country.points
+//     }).bindPopup(`<h1>${country.name}</h1><h2>Points: ${country.points}</h2>`)
+//     .addTo(myMap);
+//   };
+// L.control.layers(baseMaps, {
+//     collapsed: false
+//   }).addTo(myMap);
+  
